@@ -1,0 +1,16 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: ian-vyse (bc-uncertainty) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: creating run
+wandb: Tracking run with wandb version 0.19.8
+wandb: Run data is saved locally in /home/vyseian/GitHub/SAILOR/wandb/run-20260114_191551-p0lotglo
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run robomimic__square/seed0_demos299
+wandb: ⭐️ View project at https://wandb.ai/bc-uncertainty/SAILOR_robomimic
+wandb: 🚀 View run at https://wandb.ai/bc-uncertainty/SAILOR_robomimic/runs/p0lotglo
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /home/vyseian/miniconda3/envs/robomimic_env/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)

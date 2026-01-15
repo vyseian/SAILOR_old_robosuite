@@ -13,8 +13,8 @@ defaults:
 
   # Wandb configs
   use_wandb: True
-  wandb_entity: 'scaling-rl' # Top level name
-  wandb_project: null
+  wandb_entity: 'bc-uncertainty' # Top level name
+  wandb_project: SAILOR_robomimic
   wandb_exp_name: null
 
   # Run Params
@@ -25,7 +25,7 @@ defaults:
   generate_highres_eval: False
 
   # Data params
-  num_exp_trajs: -1 # To be specified when starting a new run
+  num_exp_trajs: 299 # -1 # To be specified when starting a new run
   num_exp_val_trajs: 1
   normalize_state_actions: False
   image_size: 64
@@ -38,7 +38,7 @@ defaults:
 
   # Evaluation
   eval_num_runs: 50
-  visualize_eval: True # Store videos of all eval runs
+  visualize_eval: False # Store videos of all eval runs
   log_every: 50
 
   # Environment
@@ -94,8 +94,8 @@ defaults:
 
   # DP Config
   dp:
-    train_steps: 1000000
-    batch_size: 256
+    train_steps: 113580 #1000000
+    batch_size: 128 #256
     lr: 0.0001
     max_iterations: 500000
     log_freq: 100
@@ -172,13 +172,13 @@ robomimic:
   
   dp:
     shared_mlp: []
-    train_steps: 24000
+    train_steps: 113580 #24000
     eval_freq: 12000
 
   env_max_steps:
-    {lift: 1e5, can: 5e5, square: 5e5}
+    {square: 756756, transport: 756756} #{lift: 1e5, can: 5e5, square: 5e5}
   env_time_limits:
-    {lift: 100, can: 200, square: 200}
+    {square: 500, transport: 700} #{lift: 100, can: 200, square: 200}
 
 robocasa:
   done_mode: 1 # can be 0, 1, 2
@@ -288,3 +288,5 @@ debug:
 
     use_discrim: true
     upate_discrim_every: 2
+
+# python3 train_sailor.py --configs cfg_dp_mppi robomimic --wandb_exp_name "seed0" --task "robomimic__square" --seed 0 --update_dp False
