@@ -205,8 +205,28 @@ def train_eval(config):
             logger=logger,
         )
 
+        # --- ADDED: Load MPPI/World Model Checkpoint ---
+        if config.mppi["pretrained_ckpt"]:
+            cprint(f"Loading MPPI World Model from: {config.mppi['pretrained_ckpt']}", "green")
+            # Usually, the load_checkpoint method is in the dreamer_class
+            trainer.dreamer_class.load_checkpoint(config.mppi["pretrained_ckpt"])
+        # -----------------------------------------------
+
+        cprint("\n----------------- Running Large Scale Evaluation -----------------", "green", attrs=["bold"])
+        
+        # 1. Update the number of runs to 1000
+        trainer.config.eval_num_runs = 1000
+        
+        # 2. Trigger the MPPI evaluation
+        # prefix: used for logging, round_id: just an identifier
+        trainer.eval_mppi_policy(prefix="final_eval", round_id=0)
+        
+        cprint(f"Finished evaluation of 1000 trajectories.", "green")
+        envs.close()
+        return # Exit early so it doesn't try to train
+
         # Run train loop
-        trainer.train_dp_with_mppi()
+        # trainer.train_dp_with_mppi()
 
     envs.close()
     cprint("--------Finished Everything--------", "yellow", attrs=["bold"])

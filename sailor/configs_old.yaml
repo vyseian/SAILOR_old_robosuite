@@ -12,7 +12,7 @@ defaults:
   precision: 32
 
   # Wandb configs
-  use_wandb: False
+  use_wandb: True
   wandb_entity: 'bc-uncertainty' # Top level name
   wandb_project: SAILOR_robomimic
   wandb_exp_name: null
@@ -20,7 +20,7 @@ defaults:
   # Run Params
   viz_expert_buffer: False
   update_dp: False
-  train_dp_mppi: True
+  train_dp_mppi: False
   state_only: False
   generate_highres_eval: False
 
@@ -37,13 +37,13 @@ defaults:
   action_dim: -1 # To be set when loading expert data
 
   # Evaluation
-  eval_num_runs: 1000
+  eval_num_runs: 50
   visualize_eval: False # Store videos of all eval runs
   log_every: 50
 
   # Environment
   task: null
-  num_envs: 50
+  num_envs: 10
   time_limit: -1 # overwritten for each env, defined below
   high_res_render: False # If true, videos will be stored in high resolution
   highres_img_size: 1024
@@ -94,12 +94,12 @@ defaults:
 
   # DP Config
   dp:
-    train_steps: 1 #113580 #1000000
+    train_steps: 113580 #1000000
     batch_size: 128 #256
     lr: 0.0001
     max_iterations: 500000
     log_freq: 100
-    eval_freq: 1
+    eval_freq: 5000
     schedule_freq: 1
     devices: 1
     device: 'cuda:0'
@@ -111,7 +111,7 @@ defaults:
     train_transform: 'gpu_medium'
     debug: False
     print_config: False
-    pretrained_ckpt: "/home/vyseian/GitHub/SAILOR/scratch_dir/logs/robomimic__square/seed0_demos299/seed0/latest_base_policy.pt"
+    pretrained_ckpt: ""
     shared_mlp: []
     use_if_ckpt_present: False
   
@@ -135,7 +135,7 @@ defaults:
     horizon: 8
     discount: 0.99
 
-    pretrained_ckpt: "/home/vyseian/GitHub/SAILOR/scratch_dir/logs/robomimic__square/seed0_demos299/seed0/latest_residual_checkpoint.pt"
+    pretrained_ckpt: ""
   
   # Train DP with MPPI
   train_dp_mppi_params:
@@ -173,7 +173,7 @@ robomimic:
   dp:
     shared_mlp: []
     train_steps: 113580 #24000
-    eval_freq: 1 #12000
+    eval_freq: 12000
 
   env_max_steps:
     {square: 756756, transport: 756756} #{lift: 1e5, can: 5e5, square: 5e5}
@@ -290,5 +290,3 @@ debug:
     upate_discrim_every: 2
 
 # python3 train_sailor.py --configs cfg_dp_mppi robomimic --wandb_exp_name "seed0" --task "robomimic__square" --seed 0 --update_dp False
-
-# python3 train_sailor.py --configs robomimic --task "robomimic__square"
